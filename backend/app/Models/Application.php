@@ -15,6 +15,12 @@ class Application extends Model
         'status',
         'applied_date',
         'notes',
-        'job_link'
+        'job_link',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

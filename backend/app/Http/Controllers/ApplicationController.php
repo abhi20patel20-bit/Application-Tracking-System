@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Application\StoreApplicationRequest;
 use App\Models\Application;
+use App\Service\Application\IndexApplicationService;
+use App\Service\Application\StoreApplicationService;
 use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
@@ -20,19 +22,9 @@ class ApplicationController extends Controller
      * @param Request $request
      * @return void
      */
-    public function index(Request $request)
+    public function index(Request $request, IndexApplicationService $service)
     {
-        $query = Application::query();
-
-        if ($request->status) {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->company_name) {
-            $query->where('company_name', 'like', "%{$request->company_name}%");
-        }
-
-        return $query->paginate(10);
+        return $service->execute($request);
     }
 
     /**
@@ -41,9 +33,9 @@ class ApplicationController extends Controller
      * @param StoreApplicationRequest $request
      * @return void
      */
-    public function store(StoreApplicationRequest $request)
+    public function store(StoreApplicationRequest $request, StoreApplicationService $service)
     {
-        return Application::create($request->all());
+        return response()->json($service->execute($request->validated()), 201);
     }
 
     /**
