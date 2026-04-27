@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Application;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,10 +19,12 @@ class ApplicationFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => User::factory(),
             'company_name' => fake()->company(),
             'job_title' => fake()->jobTitle(),
             'status' => fake()->randomElement([
                 'applied',
+                'screening',
                 'interview',
                 'offer',
                 'rejected'
