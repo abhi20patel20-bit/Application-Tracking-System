@@ -31,3 +31,23 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: ats_prometheus
+    volumes:
+    - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+    - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    container_name: ats_grafana
+    ports:
+        - "3001:3000"
+
+  redis:
+    image: redis:7
+    container_name: ats_redis
+    ports:
+    - "6379:6379"
